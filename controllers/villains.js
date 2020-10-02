@@ -1,38 +1,40 @@
 const models = require('../models')
+const villains = require('../models/villains')
 
 const getAllVillains = async (request, response) => {
-  const villains = await models.Villains.findAll({
-    attributes: ['name', 'movie', 'slug']
-  })
+  const villains = await models.villains.findAll({ attributes: ['name', 'movie', 'slug'] })
 
   return response.send(villains)
 }
 
 const getVillainBySlug = async (request, response) => {
-  const { slug } = request.params
+  try {
+    const { slug } = request.params
 
-  const matchingVillain = await models.Villains.findOne({
-    attributes: ['name', 'movie', 'slug'],
-    where: { slug }
-  })
+    const villain = await models.villains.findOne({ where: { slug } })
 
-  return matchingVillain
-    ? response.send(matchingVillain)
-    : response.sendStatus(404)
+    return villains
+      ? response.send(villain)
+      : response.sendStatus(404)
+  } catch (error) {
+    return response.status(500).send('Unable to retrieve villain, please try again')
+  }
 }
 
 const saveNewVillain = async (request, response) => {
-  const { name, movie, slug } = request.body
+  try {
+    const { name, movie, slug } = request.body
 
-  if (!name || !movie || !slug) {
-    return response
-      .status(400)
-      .send('The following fields are required: name, movie, slug')
+    if (!name || !movie || !slug) {
+      return response.status(400).send('The following parameters are required: name, movie, slug')
+    }
+
+    const newVillain = await models.villains.create({ name, movie, slug })
+
+    return response.status(201).send(newVillain)
+  } catch (error) {
+    return response.status(500).send('Unable to create new villain, please try again')
   }
-
-  const newVillain = await models.Villains.create({ name, movie, slug })
-
-  return response.status(201).send(newVillain)
 }
 
 module.exports = { getAllVillains, getVillainBySlug, saveNewVillain }
