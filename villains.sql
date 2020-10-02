@@ -2,7 +2,7 @@
 CREATE DATABASE villains;
 
 CREATE USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '4218';
-GRANT ALL ON villains.* TO 'root'@'localhost';
+GRANT ALL ON disney.* TO 'root'@'localhost';
 
 USE villains;
 

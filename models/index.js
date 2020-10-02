@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const VillainsModel = require('./villains')
 
-const connection = new Sequelize('villains', 'villains', '4218', {
+const connection = new Sequelize('disney', 'disney', '4218', {
   host: 'localhost', dialect: 'mysql',
 })
 
