@@ -4,9 +4,6 @@ CREATE DATABASE villains;
 CREATE USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '4218';
 GRANT ALL ON villains.* TO 'root'@'localhost';
 
--- DROP USER 'root'@'localhost';
--- FLUSH PRIVILEGES;
-
 USE villains;
 
 CREATE TABLE villains (
